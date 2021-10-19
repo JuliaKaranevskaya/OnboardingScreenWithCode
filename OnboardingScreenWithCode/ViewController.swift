@@ -14,7 +14,6 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     
     let containerView: UIView = {
         let containerV = UIView()
-        containerV.backgroundColor = .systemTeal
         return containerV
     }()
     
