@@ -10,7 +10,7 @@ import SnapKit
 
 class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
-    private var pageVC: StoryboardPageViewController!
+    private var pageVC = StoryboardPageViewController()
     
     let containerView: UIView = {
         let containerV = UIView()
@@ -105,6 +105,7 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
     override func viewDidLoad() {
         super.viewDidLoad()
         makeConstraints()
+        addPageVC()
         
         //swipe gestures of the white view
         let gestureToNextPage = UISwipeGestureRecognizer(target: self, action: #selector(goToNextPage))
@@ -114,6 +115,23 @@ class ViewController: UIViewController, UIPageViewControllerDataSource, UIPageVi
         roundedView.addGestureRecognizer(gestureToNextPage)
         roundedView.addGestureRecognizer(gestureToPreviousPage)
    
+    }
+    
+    private func addPageVC() {
+        addChild(pageVC)
+        view.addSubview(pageVC.view)
+        pageVC.didMove(toParent: self)
+        setPageVCConstraints()
+    }
+    
+    private func setPageVCConstraints() {
+        let vcView = pageVC.view
+        vcView?.snp.makeConstraints({ make in
+            make.top.equalTo(containerView.snp.top)
+            make.bottom.equalTo(containerView.snp.bottom)
+            make.leading.equalTo(containerView.snp.leading)
+            make.trailing.equalTo(containerView.snp.trailing)
+        })
     }
     
     @objc private func presentSplashVC() {
